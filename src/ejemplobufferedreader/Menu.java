@@ -5,6 +5,7 @@
  */
 package ejemplobufferedreader;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -86,39 +87,50 @@ public class Menu {
                    this.imprimeArray(opciones);
                    break;
                case 5:
-                    System.out.println("Ruta de fichero a crear.");
+                   System.out.println("Ruta de fichero a crear.");
                    ruta = sc.next();
                    sc.nextLine();
-                   
-                   if(LeerEscribir.crearFichero(ruta) ==0){
-                       System.out.println("Se ha creado con existo.");
-                   }else{
-                       System.out.println("No se ha podido crear.");
-                   }
-                   
-                   break;
+                  LeerEscribir.crearFichero(ruta);
+                  this.imprimeArray(opciones);
+                  break;
                case 6:
                    System.out.println("Ruta fichero a borrar.");
                    ruta = sc.next();
                    sc.nextLine();
-                   if(LeerEscribir.borrarFichero(ruta) == 0){
-                       System.out.println("Se ha borrado con existo.");
-                   }else{
-                       System.out.println("No se ha podido borrar.");
-                   }
-                   break;     
+                   LeerEscribir.borrarFichero(ruta);
+                  
+                   this.imprimeArray(opciones);
+                   break; 
                    
                case 7:
-                   salir=true;
+                   System.out.println("Ruta del directorio.");
+                   ruta = sc.next();
+
+                   imprimeArray(LeerEscribir.listarFichero(ruta));
+                   this.imprimeArray(opciones);
                    break;
                    
-                   
+               case 8:
+                   salir=true;
+                   break;
+ 
            }
         
        }   
+      }catch(IOException e){
+          System.err.println(e);
+          this.imprimeArray(opciones);
+          this.GestionaMenu();
+          
       }catch(InputMismatchException e){
+        System.err.println("Entrada no valida.");
         this.imprimeArray(opciones);
         this.GestionaMenu();
+        
+      }catch(Exception e){
+          System.err.println(e);
+          this.imprimeArray(opciones);
+          this.GestionaMenu();
       }
     }
 
@@ -129,7 +141,8 @@ public class Menu {
         opciones.add("4 Contar palabras y caracteres por linea");
         opciones.add("5 Crear fichero.");
         opciones.add("6 Borrar fichero.");
-        opciones.add("7 Salir");
+        opciones.add("7 Listar ficheros de un directorio.");
+        opciones.add("8 Salir");
     }
     
     private void imprimeArray(ArrayList<String>opciones){

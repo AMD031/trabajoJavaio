@@ -20,11 +20,9 @@ import java.util.logging.Logger;
 public class LeerEscribir {
     /**
      Funcion que recive un ruta donde esta almacenado un archivo de texto y
-     * devuelve un ArrayList con el texto.
+     devuelve un ArrayList con el texto.
      
      */
-    
-    
      public static ArrayList<String> leeFichero(String ruta){
        ArrayList<String> salida = new ArrayList<String>();
         try {
@@ -42,8 +40,8 @@ public class LeerEscribir {
                   
                   /*creamos una variable string que almacenara la linea que
                   estamos leyendo del documento. El bucle leera el archivo linea
-                  por linea hasta que llegue al final del documento y el metodo devuelva 
-                  readline*/
+                  por linea hasta que llegue al final del documento y el metodo  
+                  readline devuelva */
                   
                   String linea ="";
                   
@@ -109,51 +107,63 @@ public class LeerEscribir {
         return numeroPalabras;
     }
    
-   public static int crearFichero(String ruta){
-       int control =0;
+   public static void crearFichero(String ruta) throws IOException{
        try {
-          
-           if(new File(ruta).createNewFile()){
-               control = 0;
-           }else{
-               control = -1;
-           }
+          new File(ruta).createNewFile();
        } catch (IOException ex) {
-           Logger.getLogger(LeerEscribir.class.getName()).log(Level.SEVERE, null, ex);
+              throw new IOException("No se ha podido crear el fichero.");
        }
-       return control;
    }
-      public static int borrarFichero(String ruta){
-       int control =0;
-       if(new File(ruta).delete()){
-           control = 0;
-       }else{
-           control = -1;
+      
+    public static void borrarFichero(String ruta) throws Exception{
+    
+       if( !new File(ruta).delete()){
+           throw new Exception("No se ha podido borrar el fichero.");
        }
-       return control;
+           
+       
+  
+     
+          
+      
+        
    }
+    
+   /**
+    * Devuelve el numero de caracteres y palabras que tiene cada linea.
+    * se usa la funcion contarPalabras dentro de ella para contar palabra.
+    * 
+    */ 
 
    public static ArrayList<String>caracteresPorlinea(String ruta){
+       
        ArrayList<String> nCaractresPorlinea = new ArrayList<>();
        int nlinea  =0;
        int nCaractres =0;
+       
+       
        String linea ="";
+       //Se crea un objeto de tipo file el cual representa un fichero.
        File rutaArchivo = new File(ruta);
+       //comprobamos que la ruta exista.
          if(rutaArchivo.exists() && rutaArchivo.isFile()){
            try {
+              //Usamos la clase envoltorio de solo lectura para file.
               FileReader  archivo = new FileReader(rutaArchivo);
+             // usamos   BufferedReader para crear un flujo de emtrada y 
+             //leer el fichero.
               BufferedReader entrada = new BufferedReader(archivo); 
                
+              //contamos los caracteres de cada linea.
               while((linea = entrada.readLine())!=null){
                   for (int i = 0; i < linea.length(); i++) {
                     if( linea.charAt(i)!=' '){
                         nCaractres++;
                     }
                   }
-     
                   nlinea++;
                   nCaractresPorlinea.add(nlinea+"º linea "+contarPalabras(linea)+" palabra/s."
-                  +" Caractres "+nCaractres);  
+                  +" Caractre/s "+nCaractres);  
               }
               entrada.close();
               
@@ -168,7 +178,19 @@ public class LeerEscribir {
      }
     
     
-    
+     public static ArrayList<String> listarFichero(String ruta) {
+        ArrayList<String> lista = new ArrayList<String>();
+
+            File dir = new File(ruta);
+            if (dir.exists() && dir.isDirectory()) {
+                File[] ficheros = dir.listFiles();          
+                    for (int i = 0; i < ficheros.length; i++) {
+                       lista.add(ficheros[i].getName());
+                    }
+            }
+
+        return lista;
+    }
    
     
     

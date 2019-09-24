@@ -20,7 +20,9 @@ import java.util.logging.Logger;
 public class LeerEscribir {
     /**
      Funcion que recive un ruta donde esta almacenado un archivo de texto y
-     devuelve un ArrayList con el texto.
+     devuelve un ArrayList con el texto.Esta funcion hace uso de  BufferedReader
+     dado que se van hacer lecturas del disco duro, la velocidad de la ram y el disco
+     duro son diferentes.
      
      */
      public static ArrayList<String> leeFichero(String ruta) throws FileNotFoundException{
@@ -64,7 +66,8 @@ public class LeerEscribir {
       * 
       * 
        Funcion que recive una ruta ,un texto, y un modo en el que sera agregado
-       el texto..
+       el texto. Esta funcion  BufferedWriter porque va hacer escrituras en el disco 
+       duro con lo cual es necesario un almacenamiento intermedio.
       */
     public static void EscribirArchivo(String ruta, String agregado, int modo) throws FileNotFoundException{
          //Se crea un objeto de tipo file el cual representa un fichero.
@@ -163,7 +166,7 @@ public class LeerEscribir {
                   }
                   nlinea++;
                   nCaractresPorlinea.add(nlinea+"º linea "+contarPalabras(linea)+" palabra/s."
-                  +" Caractre/s "+nCaractres);  
+                  +" Caractere/s "+nCaractres);  
               }
               entrada.close();
               
